@@ -5,9 +5,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  redirect,
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { createEmptyContact } from "./data";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -23,6 +25,12 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export async function clientAction({request}: Route.ClientActionArgs){
+  console.log("Creating new empty contact");
+  const contact = await createEmptyContact();
+  return redirect(`/contacts/${contact.id}/edit`);
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -33,7 +41,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div id="root" className="flex">
+          {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -72,4 +82,14 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       )}
     </main>
   );
+}
+
+// As of now my understanding is that the hydrate fallback is used to show a loading state when the page is loading only if SSR is disabled.
+export function HydrateFallback(){
+  console.log("Hydrate fallback");
+  return (
+    <div className="flex justify-center items-center h-screen w-full">
+      <span className="loading loading-infinity loading-xl"></span>
+    </div>
+  )
 }
