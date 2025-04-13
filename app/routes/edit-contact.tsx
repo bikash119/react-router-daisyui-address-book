@@ -13,7 +13,7 @@ export async function clientLoader({params}: Route.ClientLoaderArgs){
 export async function clientAction({request , params}: Route.ClientActionArgs){
     const formData = await request.formData();
     const updates = Object.fromEntries(formData);
-    const contact = await updateContact(params.contactId, updates);
+    await updateContact(params.contactId, updates);
     return redirect(`/contacts/${params.contactId}`);
 }
 

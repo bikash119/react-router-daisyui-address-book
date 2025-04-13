@@ -16,9 +16,7 @@ export default function Sidebar({loaderData}: Route.ComponentProps){
     const {contacts,q} = loaderData;
     const navigation = useNavigation();
     const submit = useSubmit();
-    console.log("rendering");
     const contactElements = contacts.map((contact: any) => (
-        contact.id === "pedro-cattori" && console.log("rendering",contact),
         <NavLink key={contact.id} to={`/contacts/${contact.id}`} className={({isActive}) => isActive ? "underline decoration-sky-500" : ""}>
             <li className="list-row pr-0">
                 <div><img className="size-10 rounded-box" src={contact.avatar}/></div>

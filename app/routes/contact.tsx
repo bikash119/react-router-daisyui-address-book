@@ -13,7 +13,6 @@ export async function clientLoader({request,params}: Route.ClientLoaderArgs){
 
 export async function clientAction({request,params}: Route.ClientActionArgs){
     const formData = await request.formData();
-    console.log(formData);
     return updateContact(params.contactId, {
         favorite: formData.get("favorite") === "true",
     });
