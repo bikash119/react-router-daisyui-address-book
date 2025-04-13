@@ -50,7 +50,7 @@ export default function Contact({loaderData}: Route.ComponentProps){
 
 function Favorite({contact}:{contact:Pick<ContactRecord, "favorite">}){
     const fetcher = useFetcher();
-    const favorite = fetcher.formData?.get("favorite") === "true" ? true : contact.favorite;
+    const favorite = fetcher.formData?.get("favorite") === "true" ? true : fetcher.formData?.get("favorite") === "false" ? false : contact.favorite;
     return (
         <fetcher.Form method="post">  
             <button className="btn btn-circle" name="favorite" value={favorite ? "false" : "true"}>
